@@ -1,0 +1,33 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+
+
+a {
+  color: #00B7FF;
+}
+
+.navbar {
+  display: flex;
+  flex-shrink: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #00B7FF;
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
