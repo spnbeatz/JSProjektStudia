@@ -3,14 +3,25 @@ const db = require('../data/connect.js');
 const User = require('../data/models/user.js');
 
 async function showLoginPage(req, res) {
-    await User.find();
-    res.render("login");
+    try {
+        const user = new User({
+            username: "testuser",
+            password: "testpassword"
+        });
+
+        console.log("Creating test user...", user);
+        res.render("login");
+    } catch (error) {
+        console.error(error);
+        return res.render("login", { error: "An error occurred. Please try again." });
+    }
+
 }
 
 async function login(req, res) {
     try {
         const { username, password } = req.body;
-        
+
         const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
         if (users.length === 0) {
             return res.render("login", { error: "User not found" });

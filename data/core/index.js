@@ -3,8 +3,36 @@ const db = require('../connect.js');
 
 
 module.exports = class DbController {
-    static tableName;
-    static allowedOrderBy = ['id'];
+    static option = {
+        tableName: null,
+        allowedOrderBy: ['id']
+    }
+
+    constructor(data = {}) {
+        const schema = this.constructor.schema || {};
+
+        for (const key in schema) {
+            const config = schema[key];
+
+            if (config.required && data[key] == null) {
+                throw new Error(`Missing required field: ${key}`);
+            }
+
+            // pomiń optional bez wartości i bez defaulta
+            if (
+                data[key] === undefined &&
+                !config.required &&
+                config.default === undefined
+            ) {
+                continue;
+            }
+
+            this[key] =
+                data[key] !== undefined
+                    ? data[key]
+                    : config.default;
+        }
+    }
 
     static getWhereClause(where) {
         if (!where) {
@@ -33,7 +61,7 @@ module.exports = class DbController {
         const safeDirection = direction.toUpperCase();
 
         if (
-            this.allowedOrderBy.includes(column) &&
+            this.options.allowedOrderBy.includes(column) &&
             ['ASC', 'DESC'].includes(safeDirection)
         ) {
             return ` ORDER BY ${column} ${safeDirection}`;
@@ -60,9 +88,9 @@ module.exports = class DbController {
         limit = null
     } = {}, viewName = null) {
         try {
-            console.log(`Finding records in table: ${this.tableName}`);
+            console.log(`Finding records in table: ${this.options.tableName}`);
 
-            let query = `SELECT * FROM ${viewName ||this.tableName}`;
+            let query = `SELECT * FROM ${viewName || this.options.tableName}`;
             const params = [];
 
             // WHERE
@@ -98,7 +126,7 @@ module.exports = class DbController {
 
     static async delete(options = {}) {
         try {
-            const query = `DELETE FROM ${this.tableName} WHERE id IN (?)`;
+            const query = `DELETE FROM ${this.options.tableName} WHERE id IN (?)`;
             const result = await db.query(query, [ids]);
             return result;
         } catch (error) {
@@ -109,11 +137,11 @@ module.exports = class DbController {
 
     async create() {
         try {
-            const columns = Object.keys(this).filter(key => key !== 'tableName' && key !== 'allowedOrderBy');
+            const columns = Object.keys(this).filter(key => key !== 'options');
             const values = columns.map(key => this[key]);
             const placeholders = columns.map(() => '?').join(', ');
 
-            const query = `INSERT INTO ${this.constructor.tableName} (${columns.join(', ')}) VALUES (${placeholders})`;
+            const query = `INSERT INTO ${this.constructor.options.tableName} (${columns.join(', ')}) VALUES (${placeholders})`;
             const [result] = await db.query(query, values);
             return result;
         } catch (error) {
@@ -122,12 +150,13 @@ module.exports = class DbController {
         }
     }
 
+    // zrobic statyczna
     async update() {
         try {
             const columns = Object.keys(this).filter(key => key !== 'tableName' && key !== 'allowedOrderBy' && key !== 'id');
             const values = columns.map(key => this[key]);
             const setClause = columns.map(key => `${key} = ?`).join(', ');
-            const query = `UPDATE ${this.constructor.tableName} SET ${setClause} WHERE id = ?`;
+            const query = `UPDATE ${this.constructor.options.tableName} SET ${setClause} WHERE id = ?`;
             values.push(this.id);
             const [result] = await db.query(query, values);
             return result;
