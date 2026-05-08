@@ -1,14 +1,16 @@
 const authService = require('../services/authService.js');
 const db = require('../data/connect.js');
+const User = require('../data/models/user.js');
 
 async function showLoginPage(req, res) {
+    await User.find();
     res.render("login");
 }
 
 async function login(req, res) {
     try {
         const { username, password } = req.body;
-
+        
         const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
         if (users.length === 0) {
             return res.render("login", { error: "User not found" });
