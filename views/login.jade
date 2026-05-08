@@ -1,17 +1,20 @@
 extends layout 
 
 block content
-  h1= title
-  form(method="POST", action="/login")
-    div
-      label(for="username") Username:
-      input(type="text", name="username", id="username", required)
-    div
-      label(for="password") Password:
-      input(type="password", name="password", id="password", required)
-    div
+  div.page-container
+    form(method="POST", action="/login").auth-card
+      .auth-header
+        h2 Login
+        p Please enter your credentials to log in.
+      input(type="text", name="username", id="username", required, placeholder="Username")
+      input(type="password", name="password", id="password", required, placeholder="Password")
       button(type="submit") Login
-    if error
-      div.error= error
-    if success
-      div.success= success
+      if error
+        div.error= error
+      if success
+        div.success= success
+      .row-between 
+        .auth-remember-checkbox
+          input(type="checkbox", name="remember", id="remember")
+          label(for="remember") Remember me
+        a(href="/forgot-password") Forgot password?

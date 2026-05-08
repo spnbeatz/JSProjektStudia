@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev:server": "nodemon ./bin/www",
+    "dev": "concurrently \"npm run dev:server\""
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.2.4",
     "bcrypt": "^6.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -15,6 +17,10 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

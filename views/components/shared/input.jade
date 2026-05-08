@@ -1,0 +1,5 @@
+mixin input(name, label, type='text', value='', placeholder='', required=false)
+  .form-group
+    label(for=name) #{label}
+    input.form-control(type=type, name=name, id=name, value=value, placeholder=placeholder, required=required
+    )

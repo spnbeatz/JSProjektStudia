@@ -1,17 +1,47 @@
+:root {
+  --background-color: #e3dfe6;
+  --primary-color: #815ec2;
+}
+
 body {
-  padding: 50px;
+  width: 100vw;
+  max-width: 1920px;
+  padding: 10px;
+  height: 100vh;
+  overflow: hidden;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: start;
+  background-color: var(--background-color);
 }
 
 
 
 a {
-  color: #00B7FF;
+  color: var(--primary-color);
 }
+
+input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
 
 .navbar {
   display: flex;
@@ -30,4 +60,109 @@ a {
 
 .success {
   color: green;
+}
+
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  gap:5px
+}
+
+.auth-header h2 {
+  margin: 0;
+  padding: 0;
+  color: #333
+}
+
+.auth-header p {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  color: #777;
+  text-transform: uppercase;
+}
+
+.auth-card {
+  width: 300px;
+  height: auto;
+  padding: 35px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0px 0px 8px -10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.auth-remember-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+
+}
+
+.auth-remember-checkbox input {
+  width: auto;
+}
+
+.auth-remember-checkbox label {
+  font-size: 12px;
+  color: #777;
+}
+
+.auth-card a {
+  font-size: 12px;
+}
+
+.page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row-between {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.row-start-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
+}
+
+.word-break {
+  word-break: break-word;
+}
+
+.word-break-none {
+  word-break: keep-all;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.text-color-light {
+  color: #777;
 }

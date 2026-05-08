@@ -6,7 +6,7 @@ async function showLoginPage(req, res) {
 
 async function login(req, res) {
     const { username, password } = req.body;
-    const result = await authService.login(username, password, req);
+    const result = await authService.login(username, password);
 
     if (result.error) {
         return res.render("login", { error: result.error });
