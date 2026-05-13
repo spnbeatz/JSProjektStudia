@@ -29,7 +29,17 @@ async function updateUser(data) {
     }
 }
 
+async function getAllUsers() {
+    try {
+        const users = await User.find();
+        return users;
+    } catch (error) {
+        return { error: "An error occurred while fetching users" };
+    }
+}
+
 module.exports = {
     createUser,
-    updateUser  
+    updateUser,
+    getAllUsers
 };

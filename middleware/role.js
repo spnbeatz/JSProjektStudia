@@ -4,7 +4,7 @@ module.exports = function requireRole(role) {
       return res.redirect('/login');
     }
 
-    if (req.session.user.role !== role) {
+    if (req.session.user.role_id !== role) {
       return res.status(403).send('Brak dostępu');
     }
 

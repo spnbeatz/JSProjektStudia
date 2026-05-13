@@ -1,6 +1,9 @@
+@import "tailwindcss";
+
 :root {
   --background-color: #e3dfe6;
   --primary-color: #815ec2;
+  --text-color: rgba(0, 0, 0, 0.705);
 }
 
 body {
@@ -52,6 +55,14 @@ button {
   color: white;
   align-items: center;
   justify-content: center;
+}
+
+.nav-link-text {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0 10px;
+    font-size: 14px;
 }
 
 .error {
@@ -126,6 +137,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 60px;
 }
 
 .row-between {
@@ -166,3 +178,5 @@ button {
 .text-color-light {
   color: #777;
 }
+
+

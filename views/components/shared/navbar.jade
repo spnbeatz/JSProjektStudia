@@ -1,0 +1,15 @@
+mixin Navbar(user)
+  nav.navbar
+    if user && user.role_id === 1
+        div.nav-links
+            a.nav-item(href="/users")
+                img(src="/images/icons/users.png", alt="Add User", width="16", height="16")
+                p.nav-link-text Users
+            a.nav-item(href="/departments")
+                img(src="/images/icons/department.png", alt="Departments", width="16", height="16")
+                p.nav-link-text Departments
+    .row-between.w-auto
+        if user
+            p Witaj #{user.name} #{user.surname}
+        else
+            a(href="/login") Login

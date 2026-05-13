@@ -4,12 +4,6 @@ const User = require('../data/models/user.js');
 
 async function showLoginPage(req, res) {
     try {
-        const user = new User({
-            username: "testuser",
-            password: "testpassword"
-        });
-
-        console.log("Creating test user...", user);
         res.render("login");
     } catch (error) {
         console.error(error);
@@ -20,22 +14,22 @@ async function showLoginPage(req, res) {
 
 async function login(req, res) {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
-        const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
-        if (users.length === 0) {
-            return res.render("login", { error: "User not found" });
-        }
-        const result = await authService.login(username, password);
-
-
+        const result = await authService.login(email, password);
 
         if (result.error) {
             return res.render("login", { error: result.error });
         }
 
-        req.session.user = result;
-        res.render("index");
+        req.session.user = {
+            id: result.id,
+            email: result.email,
+            role_id: result.role_id, // Tutaj mozna pobrac z bazy konkretna role
+            name: result.name,
+            surname: result.surname,
+        };
+        res.redirect("/");
     } catch (error) {
         console.error(error);
         res.render("login", { error: "An error occurred. Please try again." });

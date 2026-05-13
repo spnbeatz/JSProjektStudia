@@ -1,0 +1,21 @@
+extends ../layout 
+
+block content 
+    div.page-container
+        form(method="POST", action="/users/create").auth-card
+            .auth-header
+                h2 Create User
+                p Please fill in the details to create a new user.
+            input(type="text", name="name", id="name", required, placeholder="First Name")
+            input(type="text", name="surname", id="surname", required, placeholder="Last Name")
+            input(type="email", name="email", id="email", required, placeholder="Email")
+            input(type="password", name="password", id="password", required, placeholder="Password")
+            select(name="role_id", id="role_id")
+                option(value="2") User
+                option(value="1") Admin
+            select(name="department_id", id="department_id")
+            button(type="submit") Create User
+            if error
+                div.error= error
+            if success
+                div.success= success

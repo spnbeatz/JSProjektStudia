@@ -1,6 +1,16 @@
 const userService = require('../services/userService.js');
 
+async function index(req, res) {
+    try {
+        const users = await userService.getAllUsers();
+        res.render("users/index", { users, user: req.session.user });
+    } catch (error) {
+        res.render("users/index", { error: "An error occurred while fetching users.", user: req.session.user });
+    }
+}
+
 async function createUser(req, res) {
+    
     const { username, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
@@ -29,5 +39,7 @@ async function updateUser(req, res) {
 }
 
 module.exports = {
-    createUser
+    createUser,
+    index,
+    updateUser
 };
