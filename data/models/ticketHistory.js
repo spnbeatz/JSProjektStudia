@@ -3,6 +3,7 @@ const DbController = require("../core/index.js");
 class TicketHistory extends DbController {
   static options = {
     tableName: "tickets_history",
+    allowedOrderBy: ["id", "history_created_at", "ticket_id"],
   };
 
   static schema = {
@@ -22,7 +23,7 @@ class TicketHistory extends DbController {
     resolved_at: { required: false },
     closed_at: { required: false },
     changed_by: { required: false },
-    history_created_at: { required: false },
+    history_created_at: { required: false, default: new Date() },
   };
 
   constructor(data = {}) {
